@@ -1,0 +1,32 @@
+{
+  "name": "quest",
+  "version": "1.0.0",
+  "description": "Quiz app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nishantpatel2607/Quest.git"
+  },
+  "keywords": [
+    "quest"
+  ],
+  "author": "Nishant Patel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nishantpatel2607/Quest/issues"
+  },
+  "homepage": "https://github.com/nishantpatel2607/Quest#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "mongodb": "^2.1.21",
+    "mongoose": "^4.4.19"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
