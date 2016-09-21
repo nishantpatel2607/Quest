@@ -1,6 +1,6 @@
 var mongoose  = require('mongoose');
 var dburl = 'mongodb://localhost:27017/quest';
-
+mongoose.Promise = global.Promise;
 mongoose.connect(dburl);
 
 mongoose.connection.on('connected',function(){
@@ -16,3 +16,6 @@ mongoose.connection.on('error',function(err){
 	console.log('mongoose connection error ' + err);
 
 });
+
+require('./quiz.model.js');
+require('./quizCategory.model.js');

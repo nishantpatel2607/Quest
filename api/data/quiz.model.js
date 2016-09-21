@@ -11,6 +11,11 @@ var questionSchema = new mongoose.Schema({
     marks:Number
 });
 
+var resultCategorySchema = new mongoose.Schema({
+    marks:Number,
+    category:String
+})
+
 
 var quizSchema = new mongoose.Schema({
     quizName:{
@@ -24,9 +29,10 @@ var quizSchema = new mongoose.Schema({
     subCategoryName:String,
     introductionText:String,
     passingMarks:Number,
-    resultCategories:[{marks:Number,category:String}],
+    resultCategories:[resultCategorySchema],
     questions:[questionSchema],
-    durationinMins:Number
+    durationinMins:Number,
+    tags:[String]
 });
 
 
