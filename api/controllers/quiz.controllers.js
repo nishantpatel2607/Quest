@@ -1,6 +1,52 @@
 var mongoose = require('mongoose');
 var Quiz = mongoose.model('Quiz');
 
+var _splitArray = function(input,delimiter){
+	var output;
+	if (input && input.length>0)
+	{
+		output = input.split(delimiter);
+	}
+	else
+	{
+		output = [];
+	}
+	return output;
+};
+
+var _addResultCategories=function(req,quiz){
+    var successFlag = true;
+    var resultCategories;
+    
+    if (req.body.resultCategories != ''){
+        //Remove existing result categories
+        var existingCatgoriesCount = 0;
+        
+        existingCatgoriesCount = quiz.resultCategories.length;
+        console.log(existingCatgoriesCount);
+        
+        for (i=existingCatgoriesCount-1;i>=0;--i){
+            quiz.resultCategories.id(quiz.resultCategories[i].id).remove();
+        }
+
+
+        resultCategories = _splitArray(req.body.resultCategories,';');
+        var resultCategoriesLength = resultCategories.length;
+        for (var i=0; i<resultCategoriesLength;i++)
+        {
+            var currCatg = _splitArray( resultCategories[i],':');
+            quiz.resultCategories.push({
+                category:currCatg[0],
+                marks:parseInt(currCatg[1],10),
+            });
+        }
+        quiz.save(function(err,quizUpdated){
+            if (err)
+                successFlag = false;
+        });
+    }
+    return successFlag;
+};
 
 module.exports.getQuizOne = function(req,res){
     
@@ -120,7 +166,8 @@ module.exports.getAllQuizzes = function(req,res){
 
 
 module.exports.createQuiz = function (req,res){
-
+console.log(req.body);
+    
     Quiz
         .create({
             quizName:req.body.quizName,
@@ -129,7 +176,7 @@ module.exports.createQuiz = function (req,res){
             introductionText:req.body.introductionText,
             passingMarks:parseInt(req.body.passingMarks,10),
             durationinMins:parseInt(req.body.durationinMins,10),
-            tags:_splitArray(req.body.tags)
+            tags:_splitArray(req.body.tags,';')
         },function(err,quiz){
             if (err)
 			{
@@ -139,9 +186,16 @@ module.exports.createQuiz = function (req,res){
 					.json(err);
 			} else {
 				console.log('Quiz created');
-				res
-					.status(201)
-					.json(quiz);
+                var successFlag = _addResultCategories(req,quiz);
+                if (successFlag){
+                    res
+                        .status(201)
+                        .json(quiz);
+                } else {
+                    res
+                        .status(400)
+                        .json({"message":"Error saving result categories"});
+                }
 			}
 
         });
@@ -149,18 +203,7 @@ module.exports.createQuiz = function (req,res){
 };
 
 
-var _splitArray = function(input){
-	var output;
-	if (input && input.length>0)
-	{
-		output = input.split(";");
-	}
-	else
-	{
-		output = [];
-	}
-	return output;
-};
+
 
 
 module.exports.updateQuiz = function (req,res){
@@ -168,7 +211,7 @@ module.exports.updateQuiz = function (req,res){
     
     Quiz
         .findById(quizId)
-        .select("-resultCategories -questions")
+        .select("-questions")
         .exec(function(err,quiz){
             
             var response = {
@@ -205,7 +248,7 @@ module.exports.updateQuiz = function (req,res){
                 quiz.introductionText = req.body.introductionText,
                 quiz.passingMarks = parseInt(req.body.passingMarks,10),
                 quiz.durationinMins = parseInt(req.body.durationinMins,10),
-                quiz.tags = _splitArray(req.body.tags)
+                quiz.tags = _splitArray(req.body.tags,";")
 
                 quiz.save(function (err, quizUpdated) {
 				if (err)
@@ -216,9 +259,16 @@ module.exports.updateQuiz = function (req,res){
 				}
 				else
 				{
-					res
-						.status(204)
-						.json();
+					var successFlag = _addResultCategories(req,quizUpdated);
+                    if (successFlag){
+                        res
+                            .status(201)
+                            .json(quizUpdated);
+                    } else {
+                        res
+                            .status(400)
+                            .json({"message":"Error saving result categories"});
+                    }
 				}
 			});
 
