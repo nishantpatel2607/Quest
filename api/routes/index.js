@@ -3,6 +3,7 @@ var router = express.Router();
 
 var ctrlQuiz = require('../controllers/quiz.controller.js');
 var ctrlQuestion = require('../controllers/question.controller.js');
+var ctrlQuizCategory = require('../controllers/quizCategory.controller.js');
 
 router
 .route('/quiz')
@@ -25,5 +26,15 @@ router
 .route('/quiz/:quizId/questions/:questionId')
 .put(ctrlQuestion.updateQuestion)
 .delete(ctrlQuestion.deleteQuestion);
+
+router 
+.route('/quizcategories')
+.get(ctrlQuizCategory.getAllCategories)
+.post(ctrlQuizCategory.createCategory);
+
+router 
+.route('/quizcategories/:quizCategoryId')
+.put(ctrlQuizCategory.updateCategory)
+.delete(ctrlQuizCategory.deleteCategory);
 
 module.exports = router;

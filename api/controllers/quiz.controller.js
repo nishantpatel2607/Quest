@@ -235,13 +235,13 @@ module.exports.updateQuiz = function (req,res){
             {
                 console.log('updating...');
 
-                quiz.quizName = req.body.quizName,
-                quiz.categoryName = req.body.categoryName,
-                quiz.subCategoryName = req.body.subCategoryName,
-                quiz.introductionText = req.body.introductionText,
-                quiz.passingMarks = parseInt(req.body.passingMarks,10),
-                quiz.durationinMins = parseInt(req.body.durationinMins,10),
-                quiz.tags = globals.splitArray(req.body.tags,";")
+                quiz.quizName = req.body.quizName;
+                quiz.categoryName = req.body.categoryName;
+                quiz.subCategoryName = req.body.subCategoryName;
+                quiz.introductionText = req.body.introductionText;
+                quiz.passingMarks = parseInt(req.body.passingMarks,10);
+                quiz.durationinMins = parseInt(req.body.durationinMins,10);
+                quiz.tags = globals.splitArray(req.body.tags,";");
 
                 quiz.save(function (err, quizUpdated) {
 				if (err)
