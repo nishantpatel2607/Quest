@@ -1,18 +1,8 @@
 var mongoose = require('mongoose');
 var Quiz = mongoose.model('Quiz');
+var globals = require('./globals.js');
 
-var _splitArray = function(input,delimiter){
-	var output;
-	if (input && input.length>0)
-	{
-		output = input.split(delimiter);
-	}
-	else
-	{
-		output = [];
-	}
-	return output;
-};
+
 
 var _addResultCategories=function(req,quiz){
     var successFlag = true;
@@ -30,11 +20,11 @@ var _addResultCategories=function(req,quiz){
         }
 
 
-        resultCategories = _splitArray(req.body.resultCategories,';');
+        resultCategories = globals.splitArray(req.body.resultCategories,';');
         var resultCategoriesLength = resultCategories.length;
         for (var i=0; i<resultCategoriesLength;i++)
         {
-            var currCatg = _splitArray( resultCategories[i],':');
+            var currCatg = globals.splitArray( resultCategories[i],':');
             quiz.resultCategories.push({
                 category:currCatg[0],
                 marks:parseInt(currCatg[1],10),
@@ -53,6 +43,7 @@ module.exports.getQuizOne = function(req,res){
     var quizId = req.params.quizId;
     Quiz
         .findById(quizId)
+        .select("-questions")
         .exec(function(err,doc){
             if (err)
             {
@@ -124,6 +115,7 @@ module.exports.getAllQuizzes = function(req,res){
     {
         Quiz
 		.find({"categoryName":category,"subCategoryName":subCategory})
+        .select("-questions")
 		.skip(offset)
 	 	.limit(count)
 		.exec(function(err,quizzes){
@@ -143,30 +135,33 @@ module.exports.getAllQuizzes = function(req,res){
     }
     else
     {
-    Quiz
-		.find()
-		.skip(offset)
-	 	.limit(count)
-		.exec(function(err,quizzes){
-			if (err)
-			{
-				res
-				.status(500)
-				.json(err);
-			}
-			else
-			{
-				console.log("Found quizzes",quizzes.length);
-				res
-					.json(quizzes);
-			}
-		});
+        Quiz
+            .find()
+            .select("-questions")
+            .skip(offset)
+            .limit(count)
+            .exec(function(err,quizzes){
+                if (err)
+                {
+                    res
+                    .status(500)
+                    .json(err);
+                }
+                else
+                {
+                    console.log("Found quizzes",quizzes.length);
+                    res
+                        .json(quizzes);
+                }
+            });
     }
 };
-
+ 
 
 module.exports.createQuiz = function (req,res){
-console.log(req.body);
+    if (req.body.passingMarks == '') req.body.passingMarks = '0';
+    if (req.body.durationinMins == '') req.body.durationinMins = '0';
+   
     
     Quiz
         .create({
@@ -176,7 +171,7 @@ console.log(req.body);
             introductionText:req.body.introductionText,
             passingMarks:parseInt(req.body.passingMarks,10),
             durationinMins:parseInt(req.body.durationinMins,10),
-            tags:_splitArray(req.body.tags,';')
+            tags:globals.splitArray(req.body.tags,';')
         },function(err,quiz){
             if (err)
 			{
@@ -203,12 +198,10 @@ console.log(req.body);
 };
 
 
-
-
-
 module.exports.updateQuiz = function (req,res){
     var quizId = req.params.quizId;
-    
+    if (req.body.passingMarks == '') req.body.passingMarks = '0';
+    if (req.body.durationinMins == '') req.body.durationinMins = '0';
     Quiz
         .findById(quizId)
         .select("-questions")
@@ -248,7 +241,7 @@ module.exports.updateQuiz = function (req,res){
                 quiz.introductionText = req.body.introductionText,
                 quiz.passingMarks = parseInt(req.body.passingMarks,10),
                 quiz.durationinMins = parseInt(req.body.durationinMins,10),
-                quiz.tags = _splitArray(req.body.tags,";")
+                quiz.tags = globals.splitArray(req.body.tags,";")
 
                 quiz.save(function (err, quizUpdated) {
 				if (err)
@@ -295,8 +288,6 @@ module.exports.deleteQuiz = function (req,res){
 				.status(204)
 				.json();
 		}
-
-
 	});
 };
 

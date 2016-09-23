@@ -1,13 +1,14 @@
 var mongoose  = require('mongoose');
 
+
 var questionSchema = new mongoose.Schema({
     questionText :{
         type:String,
         required : true
     },
-    questionType:Number,
+    questionType:Number, //1 - objective, 2-subjective
     options : [String],
-    correctAnswer:String,
+    correctAnswer:Number,
     marks:Number
 });
 
