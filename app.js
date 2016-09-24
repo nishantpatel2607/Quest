@@ -5,7 +5,8 @@ var path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
 
-var routes = require('./api/routes');
+var quizCategoriesRoutes = require('./api/routes/quizCategories');
+var quizRoutes = require('./api/routes/quiz');
 
 app.set('port',3000);
 
@@ -21,8 +22,9 @@ app.use(express.static(path.join(__dirname,'public')));
 
 app.use(bodyParser.urlencoded({extended:false}));
 
-
-app.use('/api',routes);
+app.use('/api/quiz',quizRoutes);
+app.use('/api/quizcategories',quizCategoriesRoutes);
+//app.use('/api',routes);
 
 var Server =  app.listen(app.get('port'),function() {
 	var port = Server.address().port;
