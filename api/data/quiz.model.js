@@ -15,7 +15,7 @@ var questionSchema = new mongoose.Schema({
 var resultCategorySchema = new mongoose.Schema({
     marks:Number,
     category:String
-})
+});
 
 
 var quizSchema = new mongoose.Schema({
@@ -33,7 +33,8 @@ var quizSchema = new mongoose.Schema({
     resultCategories:[resultCategorySchema],
     questions:[questionSchema],
     durationinMins:Number,
-    tags:[String]
+    tags:[String],
+    privateQuiz:Number //0 - public, 1 - private (Hosted by some user)
 });
 
 

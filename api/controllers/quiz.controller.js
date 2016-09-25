@@ -114,7 +114,7 @@ module.exports.getAllQuizzes = function(req,res){
     if (category != '')
     {
         Quiz
-		.find({"categoryName":category,"subCategoryName":subCategory})
+		.find({"categoryName":category,"subCategoryName":subCategory,"privateQuiz":0})
         .select("-questions")
 		.skip(offset)
 	 	.limit(count)
@@ -136,7 +136,7 @@ module.exports.getAllQuizzes = function(req,res){
     else
     {
         Quiz
-            .find()
+            .find({"privateQuiz":0})
             .select("-questions")
             .skip(offset)
             .limit(count)
@@ -161,7 +161,7 @@ module.exports.getAllQuizzes = function(req,res){
 module.exports.createQuiz = function (req,res){
     if (req.body.passingMarks == '') req.body.passingMarks = '0';
     if (req.body.durationinMins == '') req.body.durationinMins = '0';
-   
+    if (req.body.privateQuiz == '') req.body.privateQuiz = '0';  
     
     Quiz
         .create({
@@ -171,7 +171,8 @@ module.exports.createQuiz = function (req,res){
             introductionText:req.body.introductionText,
             passingMarks:parseInt(req.body.passingMarks,10),
             durationinMins:parseInt(req.body.durationinMins,10),
-            tags:globals.splitArray(req.body.tags,';')
+            tags:globals.splitArray(req.body.tags,';'),
+            privateQuiz:parseInt(req.body.privateQuiz,10),
         },function(err,quiz){
             if (err)
 			{
@@ -202,6 +203,7 @@ module.exports.updateQuiz = function (req,res){
     var quizId = req.params.quizId;
     if (req.body.passingMarks == '') req.body.passingMarks = '0';
     if (req.body.durationinMins == '') req.body.durationinMins = '0';
+    if (req.body.privateQuiz == '') req.body.privateQuiz = '0';  
     Quiz
         .findById(quizId)
         .select("-questions")
@@ -242,6 +244,7 @@ module.exports.updateQuiz = function (req,res){
                 quiz.passingMarks = parseInt(req.body.passingMarks,10);
                 quiz.durationinMins = parseInt(req.body.durationinMins,10);
                 quiz.tags = globals.splitArray(req.body.tags,";");
+                quiz.privateQuiz = parseInt(req.body.privateQuiz,10);
 
                 quiz.save(function (err, quizUpdated) {
 				if (err)
