@@ -1,11 +1,7 @@
 var mongoose  = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-    firstName :{
-        type:String,
-        required : true
-    },
-    lastName :{
+    fullName :{
         type:String,
         required : true
     },
@@ -13,11 +9,13 @@ var userSchema = new mongoose.Schema({
         type:String,
         required : true
     },
+    userName:String, //Mainly used if member of hosted quiz.
     password :{
         type:String,
         required : true
     },
-    userCatgory:Number,
+    companyName:String,
+    userCatgory:Number, //0 - Normal user, //1 - User who can host the quiz, //3 - Admin
     subscriptionStartDate:String,
     subscriptionEndDate:String,
     hostedQuizzes:[String], //private quiz ids hosted by user

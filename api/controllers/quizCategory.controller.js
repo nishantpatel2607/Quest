@@ -9,7 +9,12 @@ module.exports.createCategory = function (req,res){
     .exec(function(err,quizCatg){
         if (err)
         {
-            console.log(err);
+            res
+            .status(500)
+            .json({
+                title:'An error occured',
+                error:err
+            });
         }
         else if (!quizCatg || quizCatg.length == 0)
         {
@@ -20,25 +25,34 @@ module.exports.createCategory = function (req,res){
             },function(err,quizCategory){
                 if (err)
                 {
-                    console.log('Error creating category');
+                    //console.log('Error creating category');
                     res
                         .status(400)
-                        .json(err);
+                        .json({
+                            title:'An error occured',
+                            error:err
+                        });
                 } else {
                     console.log('Category created');
                     res
                         .status(201)
-                        .json(quizCategory);
+                        .json({
+                            message:'Saved category',    
+                            obj:quizCategory
+                        });
                 }
 
             });
         }
         else
         {
-            console.log(quizCatg);
+            //console.log(quizCatg);
             res
                 .status(201)
-                .json("Category already exists.");
+                .json({
+                        message:'Category already exists',    
+                        obj:quizCatg
+                    });
         }
     });
 };
@@ -52,13 +66,21 @@ module.exports.getAllCategories = function (req,res){
         {
             res
             .status(500)
-            .json(err);
+            .json({
+                title:'An error occured',
+                error:err
+            });
         }
         else
         {
             console.log("Found quizCategories",quizCategories.length);
             res
-                .json(quizCategories);
+                .status(200)
+                .json({
+                    message:'Success',    
+                    obj:quizCategories
+                });
+            
         }
     });
 
@@ -89,36 +111,32 @@ module.exports.deleteCategory = function (req,res){
 
 module.exports.updateCategory = function (req,res){
      var quizCategoryId = req.params.quizCategoryId;
-     console.log(quizCategoryId);
+     
      QuizCategory
     .findById(quizCategoryId)
     .exec(function(err,quizCategory){
-        var response = {
-			status:200,
-			message:quizCategory
-		    };
+       
         
         if (err){
-            console.log("Error finding quiz category");
-            response.status= 500
-            response.message = err;
+           res
+                .status(500)
+                .json({
+                    title:'An error occured',
+                    error:err
+                });
             
         }
         else if (!quizCategory){
-            response.status = 404
-            response.message = "Quiz category not found";
-        }
-
-        if (response.status != 200)
-        {
-            console.log('not found');
             res
-            .status(response.status)
-            .json(response.message); 
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'Quiz category not found'
+                });
         }
         else
         {
-            console.log('found');
+            
             quizCategory.categoryName = req.body.categoryName;
             quizCategory.subCategories= globals.splitArray(req.body.subCategories,';');
 
@@ -126,12 +144,18 @@ module.exports.updateCategory = function (req,res){
                 if (err){
                     res
                         .status(500)
-                        .json(err);
+                        .json({
+                            title:'An error occured',
+                            error:err
+                        });
                 }
                 else{
                     res
-                        .status(201)
-                        .json(quizCategoryUpdated);
+                     .status(201)
+                        .json({
+                            message:'Saved quiz category',    
+                            obj:quizCategoryUpdated
+                        });
                 }
             });
 
@@ -139,3 +163,39 @@ module.exports.updateCategory = function (req,res){
      });
 };
 
+module.exports.getCategory = function (req,res){
+     var quizCategoryId = req.params.quizCategoryId;
+     
+     QuizCategory
+    .findById(quizCategoryId)
+    .exec(function(err,quizCategory){
+        
+        
+        if (err){
+            res
+                    .status(500)
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
+            
+        }
+        else if (!quizCategory){
+            res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'Quiz category not found'
+                });
+        }
+        else
+        {
+            res
+                .status(200)
+                .json({
+                    message:'Success',    
+                    obj:quizCategory
+                });
+        }
+     });
+};

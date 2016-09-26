@@ -10,19 +10,19 @@ router
 .post(ctrlQuiz.createQuiz);
 
 router
-.route('/quiz/:quizId')
+.route('/:quizId')
 .get(ctrlQuiz.getQuizOne)
 .put(ctrlQuiz.updateQuiz)
 .delete(ctrlQuiz.deleteQuiz);
 
 
 router
-.route('/quiz/:quizId/questions')
+.route('/:quizId/questions')
 .get(ctrlQuestion.getQuestions)
 .post(ctrlQuestion.addQuestion);
 
 router
-.route('/quiz/:quizId/questions/:questionId')
+.route('/:quizId/questions/:questionId')
 .put(ctrlQuestion.updateQuestion)
 .delete(ctrlQuestion.deleteQuestion);
 

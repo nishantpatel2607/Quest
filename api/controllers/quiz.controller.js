@@ -50,21 +50,30 @@ module.exports.getQuizOne = function(req,res){
                 console.log("Error finding quiz");
                 res
                 .status(500)
-                .json(err);
+                .json({
+                    title:'An error occured',
+                    error:err
+                });
                 return;
             }
             else if (!doc)
             {
                 res
                 .status(404)
-                .json({"message":"Quiz not found"});
+                .json({
+                    title:'An error occured',
+                    error:err
+                });
                 return;
             }
             else
             {
                  res
                 .status(200)
-                .json(doc);
+                .json({
+                    message:'Success',    
+                    obj:doc
+                });
                 return; 
             }
         });
@@ -97,7 +106,8 @@ module.exports.getAllQuizzes = function(req,res){
 		res
 			.status(400)
 			.json({
-				"message":"Invalid count and offset in querystring"
+                title:'An error occured',
+				error:"Invalid count and offset in querystring"
 			});
 		return;
 	}
@@ -106,7 +116,8 @@ module.exports.getAllQuizzes = function(req,res){
 		res
 			.status(400)
 			.json({
-				"message":"count limit of " + maxCount + " exceeded"
+                title:'An error occured',
+				error:"count limit of " + maxCount + " exceeded"
 			});
 		return;
 	}
@@ -123,13 +134,30 @@ module.exports.getAllQuizzes = function(req,res){
 			{
 				res
 				.status(500)
-				.json(err);
+				.json({
+                    title:'An error occured',
+                    error:err
+                });
+			}
+            else if (!quizzes)
+			{
+				res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'No quizzes found'
+                });
 			}
 			else
 			{
-				console.log("Found quizzes",quizzes.length);
+				//console.log("Found quizzes",quizzes.length);
 				res
-					.json(quizzes);
+                .status(200)
+                .json({
+                    message:'Success',    
+                    obj:quizzes
+                });
+					
 			}
 		});
     }
@@ -145,13 +173,29 @@ module.exports.getAllQuizzes = function(req,res){
                 {
                     res
                     .status(500)
-                    .json(err);
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
+                }
+                else if (!quizzes)
+                {
+                    res
+                    .status(404)
+                    .json({
+                        title:'An error occured',
+                        error:'No quizzes found'
+                    });
                 }
                 else
                 {
                     console.log("Found quizzes",quizzes.length);
                     res
-                        .json(quizzes);
+                        .status(200)
+                        .json({
+                            message:'Success',    
+                            obj:quizzes
+                        });
                 }
             });
     }
@@ -179,18 +223,31 @@ module.exports.createQuiz = function (req,res){
 				console.log('Error creating quiz');
 				res
 					.status(400)
-					.json(err);
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
+					
 			} else {
 				console.log('Quiz created');
                 var successFlag = _addResultCategories(req,quiz);
                 if (successFlag){
                     res
-                        .status(201)
-                        .json(quiz);
+                     .status(201)
+                        .json({
+                            message:'Saved quiz',    
+                            obj:quiz
+                        });
+
+                       
                 } else {
                     res
                         .status(400)
-                        .json({"message":"Error saving result categories"});
+                        .json({
+                            title:'An error occured',
+                            error:"Error saving result categories"
+                        });
+                        
                 }
 			}
 
@@ -208,34 +265,31 @@ module.exports.updateQuiz = function (req,res){
         .findById(quizId)
         .select("-questions")
         .exec(function(err,quiz){
-            
-            var response = {
-			status:200,
-			message:quiz
-		    };
+           
             if (err)
             {
-                console.log("Error finding quiz");
-                response.status= 500
-                response.message = err;
+                
+                //console.log("Error finding quiz");
+                res
+                    .status(500)
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
                 
             }
             else if (!quiz)
             {
-                response.status = 404
-                response.message = "Quiz not found";
-                
-            }
-
-            if (response.status != 200)
-            {
                 res
-				.status(response.status)
-				.json(response.message); 
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    message:'No quiz found'
+                });
             }
             else
             {
-                console.log('updating...');
+                //console.log('updating...');
 
                 quiz.quizName = req.body.quizName;
                 quiz.categoryName = req.body.categoryName;
@@ -250,20 +304,31 @@ module.exports.updateQuiz = function (req,res){
 				if (err)
 				{
 					res
-						.status(500)
-						.json(err);
+                    .status(500)
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
 				}
 				else
 				{
 					var successFlag = _addResultCategories(req,quizUpdated);
                     if (successFlag){
-                        res
-                            .status(201)
-                            .json(quizUpdated);
+                         res
+                        .status(201)
+                            .json({
+                                message:'Saved quiz',    
+                                obj:quizUpdated
+                        });
+                        
                     } else {
                         res
-                            .status(400)
-                            .json({"message":"Error saving result categories"});
+                        .status(400)
+                        .json({
+                            title:'An error occured',
+                            error:"Error saving result categories"
+                        });
+                        
                     }
 				}
 			});
@@ -280,10 +345,22 @@ module.exports.deleteQuiz = function (req,res){
 	.exec(function(err,quiz){
 		if (err)
 		{
-			res
-				.status(404)
-				.json(err);
+			 res
+                .status(500)
+                .json({
+                    title:'An error occured',
+                    error:err
+                });
 		}
+        else if (!quiz)
+			{
+				res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'No quiz found'
+                });
+			}
 		else
 		{
 			console.log("Quiz deleted id:" , quizId)

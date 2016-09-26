@@ -19,8 +19,8 @@ app.use(express.static(path.join(__dirname,'public')));
 
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.use('/api/quiz',quizRoutes);
-app.use('/api/quizcategories',quizCategoriesRoutes);
+app.use('/quiz',quizRoutes);
+app.use('/quizcategories',quizCategoriesRoutes);
 //app.use('/api',routes);
 
 var Server =  app.listen(app.get('port'),function() {

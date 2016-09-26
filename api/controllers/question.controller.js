@@ -18,12 +18,18 @@ var _addQuestion = function (req,res,quiz) {
     quiz.save(function(err,quizupdated){
         if (err){
             res
-            .status(500)
-            json(err);
+             .status(500)
+                .json({
+                    title:'An error occured',
+                    error:err
+                });
         } else {
             res
             .status(201)
-            .json(quizupdated.questions[quizupdated.questions.length-1]);
+             .json({
+                        message:'Question quiz',    
+                        obj:quizupdated.questions[quizupdated.questions.length-1]
+                });
         }
   });
 };
@@ -36,30 +42,35 @@ module.exports.addQuestion = function (req,res){
         .findById(quizId)
         .select("questions")
         .exec(function(err,quiz){
-            var response = {
-                status : 200,
-                message : []
-            };
+            
             if (err) {
-                console.log("Error finding quiz");
-                response.status = 500;
-                response.message = err;
+                     res
+                    .status(500)
+                        .json({
+                            title:'An error occured',
+                            error:err
+                        });
             } else if(!quiz) {
-                console.log("Quiz id not found in database", id);
-                response.status = 404;
-                response.message = {
-                "message" : "Quiz id not found " + id
-                };
+                res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'No quiz found'
+                });
+
             }
-            if (quiz)
+            else
             {
                 _addQuestion(req,res,quiz);
-
-            }else{
-            res
-                .status(response.status)
-                .json(response.message);
-            } 
+               /* res
+                .status(200)
+                    .json({
+                        message:'Success',    
+                        
+                    });*/
+            
+            
+            }
         });
     
 
@@ -78,57 +89,60 @@ module.exports.updateQuestion = function (req,res){
         .select("questions")
         .exec(function(err,quiz){
             var thisQuestion;
-            var response = {
-                status : 200,
-                message : {}
-            };
+            
             if (err) {
-                console.log("Error finding quiz");
-                response.status = 500;
-                response.message = err;
+                 res
+                    .status(500)
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
             } 
             else if(!quiz) {
-                console.log("Quiz id not found in database", quizid);
-                response.status = 404;
-                response.message = {
-                    "message" : "Quiz ID not found " + quizid
-                };
+                res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'No quiz found'
+                });
             }
             else {
                 // Get the question
                 thisQuestion = quiz.questions.id(questionId);
                 // If the question doesn't exist Mongoose returns null
                 if (!thisQuestion) {
-                    response.status = 404;
-                    response.message = {
-                        "message" : "Question ID not found " + questionId
-                    };
+                        res
+                        .status(404)
+                        .json({
+                            title:'An error occured',
+                            error:'Question ID not found ' + questionId
+                        });
+                }
+                else {
+                    thisQuestion.questionText = req.body.questionText;
+                    thisQuestion.questionType =  parseInt( req.body.questionType,10);
+                    thisQuestion.options = globals.splitArray(req.body.options,';');
+                    thisQuestion.correctAnswer = parseInt(req.body.correctAnswer,10);
+                    thisQuestion.marks = parseInt(req.body.marks,10);
+
+                    quiz.save(function(err, quizUpdated) {
+                    if (err) {
+                        res
+                            .status(500)
+                            .json({
+                                title:'An error occured',
+                                error:err
+                            });
+                        } else {
+                        res
+                            .status(204)
+                            .json();
+                        }
+                    });
                 }
             }
 
-            if (response.status !== 200) {
-            res
-                .status(response.status)
-                .json(response.message);
-            } else {
-                thisQuestion.questionText = req.body.questionText;
-                thisQuestion.questionType =  parseInt( req.body.questionType,10);
-                thisQuestion.options = globals.splitArray(req.body.options,';');
-                thisQuestion.correctAnswer = parseInt(req.body.correctAnswer,10);
-                thisQuestion.marks = parseInt(req.body.marks,10);
-
-                quiz.save(function(err, quizUpdated) {
-                if (err) {
-                    res
-                        .status(500)
-                        .json(err);
-                    } else {
-                    res
-                        .status(204)
-                        .json();
-                    }
-                });
-            }
+            
         });
 };
 
@@ -142,52 +156,55 @@ module.exports.deleteQuestion = function (req,res){
         .select("questions")
         .exec(function(err,quiz){
             var thisQuestion;
-            var response = {
-                status : 200,
-                message : {}
-            };
+           
             if (err) {
-                console.log("Error finding quiz");
-                response.status = 500;
-                response.message = err;
+                res
+                    .status(500)
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
             } 
             else if(!quiz) {
-                console.log("Quiz id not found in database", quizid);
-                response.status = 404;
-                response.message = {
-                    "message" : "Quiz ID not found " + quizid
-                };
+                res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'No quiz found'
+                });
             }
             else {
                 // Get the question
                 thisQuestion = quiz.questions.id(questionId);
                 // If the question doesn't exist Mongoose returns null
                 if (!thisQuestion) {
-                    response.status = 404;
-                    response.message = {
-                        "message" : "Question ID not found " + questionId
-                    };
+                    res
+                        .status(404)
+                        .json({
+                            title:'An error occured',
+                            error:'Question ID not found ' + questionId
+                        });
+                }
+                else {
+                    quiz.questions.id(questionId).remove();
+                    quiz.save(function(err, quizUpdated) {
+                    if (err) {
+                       res
+                            .status(500)
+                            .json({
+                                title:'An error occured',
+                                error:err
+                            });
+                        } else {
+                        res
+                            .status(204)
+                            .json();
+                        }
+                    });
                 }
             }
 
-            if (response.status !== 200) {
-            res
-                .status(response.status)
-                .json(response.message);
-            } else {
-                quiz.questions.id(questionId).remove();
-                quiz.save(function(err, quizUpdated) {
-                if (err) {
-                    res
-                        .status(500)
-                        .json(err);
-                    } else {
-                    res
-                        .status(204)
-                        .json();
-                    }
-                });
-            }
+            
         });
 };
 
@@ -198,31 +215,29 @@ module.exports.getQuestions = function (req,res){
         .findById(quizId)
         .select("questions")
         .exec(function(err,quiz){
-            var response = {
-                status : 200,
-                message : {}
-            };
+            
             if (err) {
-                console.log("Error finding quiz");
-                response.status = 500;
-                response.message = err;
+               res
+                    .status(500)
+                    .json({
+                        title:'An error occured',
+                        error:err
+                    });
             } 
             else if(!quiz) {
-                console.log("Quiz id not found in database", quizid);
-                response.status = 404;
-                response.message = {
-                    "message" : "Quiz ID not found " + quizid
-                };
+                res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'No quiz found'
+                });
             }
-
-            if (response.status !== 200) {
-            res
-                .status(response.status)
-                .json(response.message);
-            } else {
+            else {
                 res
                     .status(response.status)
                     .json(quiz);
             }
+
+            
         });
 };

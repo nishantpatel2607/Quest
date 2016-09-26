@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var ctrlQuiz = require('../controllers/quiz.controller.js');
-var ctrlQuestion = require('../controllers/question.controller.js');
 var ctrlQuizCategory = require('../controllers/quizCategory.controller.js');
 
 
@@ -13,7 +11,8 @@ router
 .post(ctrlQuizCategory.createCategory);
 
 router 
-.route('/quizcategories/:quizCategoryId')
+.route('/:quizCategoryId')
+.get(ctrlQuizCategory.getCategory)
 .put(ctrlQuizCategory.updateCategory)
 .delete(ctrlQuizCategory.deleteCategory);
 
