@@ -222,7 +222,7 @@ module.exports.createQuiz = function (req,res){
 			{
 				console.log('Error creating quiz');
 				res
-					.status(400)
+					.status(500)
                     .json({
                         title:'An error occured',
                         error:err
@@ -242,7 +242,7 @@ module.exports.createQuiz = function (req,res){
                        
                 } else {
                     res
-                        .status(400)
+                        .status(500)
                         .json({
                             title:'An error occured',
                             error:"Error saving result categories"

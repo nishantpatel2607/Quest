@@ -18,7 +18,7 @@ var _addQuestion = function (req,res,quiz) {
     quiz.save(function(err,quizupdated){
         if (err){
             res
-             .status(500)
+                .status(500)
                 .json({
                     title:'An error occured',
                     error:err
@@ -27,9 +27,9 @@ var _addQuestion = function (req,res,quiz) {
             res
             .status(201)
              .json({
-                        message:'Question quiz',    
+                        message:'Question saved',    
                         obj:quizupdated.questions[quizupdated.questions.length-1]
-                });
+            });
         }
   });
 };
@@ -62,12 +62,7 @@ module.exports.addQuestion = function (req,res){
             else
             {
                 _addQuestion(req,res,quiz);
-               /* res
-                .status(200)
-                    .json({
-                        message:'Success',    
-                        
-                    });*/
+               
             
             
             }

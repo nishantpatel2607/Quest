@@ -42,7 +42,7 @@ module.exports.signUp = function(req,res){
             if (err)
             {
                 res
-                    .status(400)
+                    .status(500)
                     .json(err);
             }
             else{
