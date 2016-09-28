@@ -14,6 +14,7 @@ var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var app_component_1 = require('./app.component');
+var navbar_component_1 = require('./navbar.component');
 //import { routing }              from './app.routing';
 var AppModule = (function () {
     function AppModule() {
@@ -27,6 +28,7 @@ var AppModule = (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
+                navbar_component_1.NavBarComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

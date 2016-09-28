@@ -15,11 +15,14 @@ app.use(function(req,res,next){
 	next();
 });
 
-console.log("Here" + __dirname);
+
 
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
-app.use('/fonts', express.static(__dirname + '/fonts'));
+app.use('/fonts', express.static(__dirname + '/app/assets/fonts'));
+app.use('/stylesheets', express.static(__dirname + '/app/assets/stylesheets'));
+app.use('/js', express.static(__dirname + '/app/assets/js'));
+app.use('/jquery', express.static(__dirname + '/app/assets/jquery'));
 app.use('/', express.static(__dirname ));
 
 
