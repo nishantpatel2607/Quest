@@ -29,12 +29,17 @@
                 <a *ngIf = "category.subCategories.length>0">{{category.categoryName}}</a>
                 <ul class="dropdown-menu"  *ngIf = "category.subCategories.length>0">
                   <li *ngFor = "let subCategory of category.subCategories">
-                    <a (click)="onCategoryClicked(category.categoryName + ',' + subCategory)" 
+                   <!-- <a (click)="onCategoryClicked(category.categoryName + ',' + subCategory)" 
+                    tabindex="-1" >{{subCategory}}</a>-->
+                    <a [routerLink] = "['/quizlist',{category:category.categoryName, subcategory:subCategory}]" 
                     tabindex="-1" >{{subCategory}}</a>
                   </li>
                 </ul> 
-                <a *ngIf = "category.subCategories.length==0" 
+                <!--<a *ngIf = "category.subCategories.length==0" 
                   (click)="onCategoryClicked(category.categoryName)">{{category.categoryName}}
+                </a>-->
+                <a *ngIf = "category.subCategories.length==0" 
+                  [routerLink] = "['/quizlist',{category:category.categoryName, subcategory:''}]">{{category.categoryName}}
                 </a>
               </li>
               

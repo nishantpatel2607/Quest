@@ -11,7 +11,8 @@ import {QuizCategoriesService} from './quizCategories.service';
 })
 export class NavBarComponent implements OnInit{
 
-    constructor(private _quizCategoriesService: QuizCategoriesService) {}
+    constructor(private _quizCategoriesService: QuizCategoriesService,
+    private router: Router) {}
 
     quizCategories: quizCategory[];
 
@@ -26,7 +27,14 @@ export class NavBarComponent implements OnInit{
     }
 
     onCategoryClicked(category:string){
-        console.log(category);
+        var params = category.split(',');
+        var catg = params[0];
+        var subCatg = '';
+        if (params.length>1)
+            subCatg = params[1];
+        let link = ['/quizlist/:category/:subcategory', {category: catg, subcategory:subCatg}];
+        console.log(link);
+        this.router.navigate(link);
         
         
     }

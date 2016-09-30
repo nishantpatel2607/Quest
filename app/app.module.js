@@ -13,9 +13,13 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
+// Imports for loading & configuring the in-memory web api
+//import { InMemoryWebApiModule } from 'angular2-in-memory-web-api';
 var app_component_1 = require('./app.component');
 var navbar_component_1 = require('./navbar.component');
-//import { routing }              from './app.routing';
+var quizList_component_1 = require('./quiz/quizList.component');
+var home_component_1 = require('./home.component');
+var app_routing_1 = require('./app.routing');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -24,11 +28,14 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
-                http_1.HttpModule
+                http_1.HttpModule,
+                app_routing_1.routing
             ],
             declarations: [
                 app_component_1.AppComponent,
-                navbar_component_1.NavBarComponent
+                navbar_component_1.NavBarComponent,
+                quizList_component_1.QuizListComponent,
+                home_component_1.HomeComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

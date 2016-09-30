@@ -6,26 +6,28 @@ import { HttpModule }    from '@angular/http';
 
 
 // Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular2-in-memory-web-api';
+//import { InMemoryWebApiModule } from 'angular2-in-memory-web-api';
 
 
 import { AppComponent }         from './app.component';
 import {NavBarComponent} from './navbar.component';
+import {QuizListComponent} from './quiz/quizList.component';
+import { HomeComponent }         from './home.component';
 
-
-//import { routing }              from './app.routing';
+import { routing }              from './app.routing';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
-    
-    //routing
+    HttpModule,
+    routing
   ],
   declarations: [
     AppComponent,
-   NavBarComponent
+    NavBarComponent,
+    QuizListComponent,
+    HomeComponent
   ],
   
   bootstrap: [ AppComponent ]
