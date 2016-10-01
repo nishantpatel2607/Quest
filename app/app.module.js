@@ -13,6 +13,7 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
+var common_1 = require('@angular/common');
 // Imports for loading & configuring the in-memory web api
 //import { InMemoryWebApiModule } from 'angular2-in-memory-web-api';
 var app_component_1 = require('./app.component');
@@ -37,6 +38,7 @@ var AppModule = (function () {
                 quizList_component_1.QuizListComponent,
                 home_component_1.HomeComponent
             ],
+            providers: [{ provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
