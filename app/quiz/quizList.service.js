@@ -50,6 +50,34 @@ var QuizListService = (function () {
         })
             .catch(function (error) { return Observable_1.Observable.throw(error); });
     };
+    QuizListService.prototype.getQuizessBySearchTag = function (searchTag) {
+        var _url = this.url;
+        _url += "quiz?tag=" + searchTag;
+        return this._http.get(_url)
+            .map(function (response) {
+            var data = response.json().obj;
+            var objs = [];
+            for (var i = 0; i < data.length; i++) {
+                var _quiz = new quiz_1.quiz();
+                _quiz.quizName = data[i].quizName;
+                _quiz.categoryName = data[i].categoryName;
+                _quiz.subCategoryName = data[i].subCategoryName;
+                _quiz.introductionText = data[i].introductionText;
+                _quiz.passingMarks = data[i].passingMarks;
+                _quiz.durationinMins = data[i].durationinMins;
+                _quiz.privateQuiz = data[i].privateQuiz;
+                for (var j = 0; j < data[i].resultCategories.length; j++) {
+                    var resultCatg = new quiz_1.resultCategory();
+                    resultCatg.category = data[i].resultCategories[j].category;
+                    resultCatg.marks = data[i].resultCategories[j].marks;
+                    _quiz.resultCategories.push(resultCatg);
+                }
+                objs.push(_quiz);
+            }
+            return objs;
+        })
+            .catch(function (error) { return Observable_1.Observable.throw(error); });
+    };
     QuizListService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

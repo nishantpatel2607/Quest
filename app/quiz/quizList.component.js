@@ -22,10 +22,19 @@ var QuizListComponent = (function () {
         this.sub = this.route.params.subscribe(function (params) {
             _this.category = params["category"];
             _this.subCategory = params["subcategory"];
-            _this._quizListService.getQuizessByCategory(_this.category, _this.subCategory)
-                .subscribe(function (quizess) {
-                _this.quizlist = quizess;
-            }, function (error) { return console.error(error); });
+            _this.searchTag = params["search"];
+            if (_this.searchTag == '') {
+                _this._quizListService.getQuizessByCategory(_this.category, _this.subCategory)
+                    .subscribe(function (quizess) {
+                    _this.quizlist = quizess;
+                }, function (error) { return console.error(error); });
+            }
+            else {
+                _this._quizListService.getQuizessBySearchTag(_this.searchTag)
+                    .subscribe(function (quizess) {
+                    _this.quizlist = quizess;
+                }, function (error) { return console.error(error); });
+            }
         });
     };
     QuizListComponent.prototype.ngOnDestroy = function () {
@@ -34,7 +43,7 @@ var QuizListComponent = (function () {
     QuizListComponent = __decorate([
         core_1.Component({
             selector: 'quizList',
-            template: "\n     <ul>\n         <li  *ngFor = \"let quiz of quizlist\">\n         {{quiz.quizName}}\n         </li>\n     </ul>\n     \n    ",
+            template: "\n     <ul>\n         <li  *ngFor = \"let quiz of quizlist\">\n         {{quiz.quizName}}\n         </li>\n     </ul>\n     {{searchTag}}\n     \n    ",
             providers: [quizList_service_1.QuizListService]
         }), 
         __metadata('design:paramtypes', [quizList_service_1.QuizListService, router_1.ActivatedRoute, router_1.Router])

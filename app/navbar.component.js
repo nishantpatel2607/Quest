@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var quizCategories_service_1 = require('./quizCategories.service');
+//import {ControlGroup} from '@angular/common';
 var NavBarComponent = (function () {
     function NavBarComponent(_quizCategoriesService, router) {
         this._quizCategoriesService = _quizCategoriesService;
@@ -22,6 +23,10 @@ var NavBarComponent = (function () {
             .subscribe(function (categories) {
             _this.quizCategories = categories;
         }, function (error) { return console.error(error); });
+    };
+    NavBarComponent.prototype.onSubmit = function () {
+        this.router.navigate(['/quizlist', { search: this.searchText }]);
+        console.log(this.searchText);
     };
     NavBarComponent.prototype.onCategoryClicked = function (category) {
         var params = category.split(',');
@@ -36,7 +41,8 @@ var NavBarComponent = (function () {
     NavBarComponent = __decorate([
         core_1.Component({
             selector: 'navbar',
-            templateUrl: 'app/navbar.component.html',
+            moduleId: module.id,
+            templateUrl: 'navbar.component.html',
             providers: [quizCategories_service_1.QuizCategoriesService]
         }), 
         __metadata('design:paramtypes', [quizCategories_service_1.QuizCategoriesService, router_1.Router])

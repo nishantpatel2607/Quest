@@ -4,15 +4,22 @@ import {quizCategory} from "./model/quizCategory";
 import {QuizCategoriesService} from './quizCategories.service';
 
 
+
+//import {ControlGroup} from '@angular/common';
+
 @Component({
     selector:'navbar',
-    templateUrl:'app/navbar.component.html',
+    moduleId: module.id,
+    templateUrl:'navbar.component.html',
     providers:[QuizCategoriesService]
 })
 export class NavBarComponent implements OnInit{
-
+   
+    searchText;
     constructor(private _quizCategoriesService: QuizCategoriesService,
-    private router: Router) {}
+    private router: Router) {
+         
+    }
 
     quizCategories: quizCategory[];
 
@@ -24,6 +31,12 @@ export class NavBarComponent implements OnInit{
                 },
                 error => console.error(error)
             );
+    }
+
+    onSubmit(){
+        this.router.navigate(['/quizlist', {search:this.searchText}]);
+
+        console.log(this.searchText);
     }
 
     onCategoryClicked(category:string){

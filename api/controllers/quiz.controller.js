@@ -83,6 +83,7 @@ module.exports.getQuizOne = function(req,res){
 module.exports.getAllQuizzes = function(req,res){
     var category = '';
     var subCategory = '';
+    var tag = '';
     var offset = 0;
     var count = 5;
     var maxCount = 10;
@@ -93,6 +94,9 @@ module.exports.getAllQuizzes = function(req,res){
 
         if (req.query.subcategory)
             subCategory = req.query.subcategory;
+        
+        if (req.query.tag)
+            tag = req.query.tag;
 
         if (req.query.offset)
             offset = parseInt(req.query.offset,10);
@@ -160,6 +164,46 @@ module.exports.getAllQuizzes = function(req,res){
 					
 			}
 		});
+    }
+    else if (tag != ''){
+
+        Quiz
+		.find({"tags":{$eq:tag}})
+        .select("-questions")
+		.skip(offset)
+	 	.limit(count)
+		.exec(function(err,quizzes){
+			if (err)
+			{
+				res
+				.status(500)
+				.json({
+                    title:'An error occured',
+                    error:err
+                });
+			}
+            else if (!quizzes)
+			{
+				res
+				.status(404)
+				.json({
+                    title:'An error occured',
+                    error:'No quizzes found'
+                });
+			}
+			else
+			{
+				//console.log("Found quizzes",quizzes.length);
+				res
+                .status(200)
+                .json({
+                    message:'Success',    
+                    obj:quizzes
+                });
+					
+			}
+		});
+
     }
     else
     {

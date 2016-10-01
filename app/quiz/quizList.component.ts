@@ -11,6 +11,7 @@ import {QuizListService} from './quizList.service';
          {{quiz.quizName}}
          </li>
      </ul>
+     {{searchTag}}
      
     `,
     providers:[QuizListService]
@@ -19,6 +20,7 @@ export class QuizListComponent implements OnInit{
      quizlist: quiz[];
      category:string;
      subCategory:string;
+     searchTag:string;
      private sub: any;
 
      constructor(private _quizListService:QuizListService,
@@ -30,14 +32,26 @@ export class QuizListComponent implements OnInit{
         this.sub = this.route.params.subscribe(params => {
                 this.category = params["category"]  ;
                 this.subCategory = params["subcategory"];
+                this.searchTag = params["search"];
+                if (this.searchTag == ''){
+                    this._quizListService.getQuizessByCategory(this.category,this.subCategory)
+                     .subscribe(
+                    quizess => {
+                        this.quizlist = quizess;
+                    },
+                    error => console.error(error)
+                    );
+                }
+                else{
+                    this._quizListService.getQuizessBySearchTag(this.searchTag)
+                     .subscribe(
+                    quizess => {
+                        this.quizlist = quizess;
+                    },
+                    error => console.error(error)
+                    );
+                }
 
-                this._quizListService.getQuizessByCategory(this.category,this.subCategory)
-            .subscribe(
-                quizess => {
-                    this.quizlist = quizess;
-                },
-                error => console.error(error)
-            );
         });
 
         
