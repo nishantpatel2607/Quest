@@ -236,3 +236,44 @@ module.exports.getQuestions = function (req,res){
             
         });
 };
+
+module.exports.getQuestionsWithoutAnswer = function(req,res){
+    
+    var quizId = req.params.quizId;
+    Quiz
+        .findById(quizId)
+        .select("-questions.correctAnswer")
+        .exec(function(err,doc){
+            if (err)
+            {
+                console.log("Error finding quiz");
+                res
+                .status(500)
+                .json({
+                    title:'An error occured',
+                    error:err
+                });
+                return;
+            }
+            else if (!doc)
+            {
+                res
+                .status(404)
+                .json({
+                    title:'An error occured',
+                    error:err
+                });
+                return;
+            }
+            else
+            {
+                 res
+                .status(200)
+                .json({
+                    message:'Success',    
+                    obj:doc
+                });
+                return; 
+            }
+        });
+};

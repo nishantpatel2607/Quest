@@ -31,6 +31,7 @@ var QuizListService = (function () {
             var objs = [];
             for (var i = 0; i < data.length; i++) {
                 var _quiz = new quiz_1.quiz();
+                _quiz.Id = data[i]._id;
                 _quiz.quizName = data[i].quizName;
                 _quiz.categoryName = data[i].categoryName;
                 _quiz.subCategoryName = data[i].subCategoryName;
@@ -59,6 +60,7 @@ var QuizListService = (function () {
             var objs = [];
             for (var i = 0; i < data.length; i++) {
                 var _quiz = new quiz_1.quiz();
+                _quiz.Id = data[i]._id;
                 _quiz.quizName = data[i].quizName;
                 _quiz.categoryName = data[i].categoryName;
                 _quiz.subCategoryName = data[i].subCategoryName;
@@ -75,6 +77,31 @@ var QuizListService = (function () {
                 objs.push(_quiz);
             }
             return objs;
+        })
+            .catch(function (error) { return Observable_1.Observable.throw(error); });
+    };
+    QuizListService.prototype.getQuizById = function (quizId) {
+        var _url = this.url;
+        _url += "quiz/" + quizId;
+        return this._http.get(_url)
+            .map(function (response) {
+            var data = response.json().obj;
+            var _quiz = new quiz_1.quiz();
+            _quiz.Id = data._id;
+            _quiz.quizName = data.quizName;
+            _quiz.categoryName = data.categoryName;
+            _quiz.subCategoryName = data.subCategoryName;
+            _quiz.introductionText = data.introductionText;
+            _quiz.passingMarks = data.passingMarks;
+            _quiz.durationinMins = data.durationinMins;
+            _quiz.privateQuiz = data.privateQuiz;
+            for (var j = 0; j < data.resultCategories.length; j++) {
+                var resultCatg = new quiz_1.resultCategory();
+                resultCatg.category = data.resultCategories[j].category;
+                resultCatg.marks = data.resultCategories[j].marks;
+                _quiz.resultCategories.push(resultCatg);
+            }
+            return _quiz;
         })
             .catch(function (error) { return Observable_1.Observable.throw(error); });
     };

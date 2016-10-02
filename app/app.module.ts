@@ -14,9 +14,10 @@ import {
 
 
 import { AppComponent }         from './app.component';
-import {NavBarComponent} from './navbar.component';
-import {QuizListComponent} from './quiz/quizList.component';
-import { HomeComponent }         from './home.component';
+import {NavBarComponent}        from './navbar.component';
+import {QuizListComponent}      from './quiz/quizList.component';
+import {QuizCoverComponent}      from './quiz/quizCover.component';
+import { HomeComponent }        from './home.component';
 
 import { routing }              from './app.routing';
 
@@ -31,6 +32,7 @@ import { routing }              from './app.routing';
     AppComponent,
     NavBarComponent,
     QuizListComponent,
+    QuizCoverComponent,
     HomeComponent
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],

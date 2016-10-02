@@ -10,46 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var quiz_1 = require("../model/quiz");
 var quizList_service_1 = require('./quizList.service');
-var QuizListComponent = (function () {
-    function QuizListComponent(_quizListService, route, router) {
+var QuizCoverComponent = (function () {
+    function QuizCoverComponent(_quizListService, route, router) {
         this._quizListService = _quizListService;
         this.route = route;
         this.router = router;
+        this._quiz = new quiz_1.quiz();
     }
-    QuizListComponent.prototype.ngOnInit = function () {
+    QuizCoverComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
-            _this.category = params["category"];
-            _this.subCategory = params["subcategory"];
-            _this.searchTag = params["search"];
-            if (!_this.searchTag || _this.searchTag == '') {
-                _this._quizListService.getQuizessByCategory(_this.category, _this.subCategory)
-                    .subscribe(function (quizess) {
-                    _this.quizlist = quizess;
-                }, function (error) { return console.error(error); });
-            }
-            else {
-                _this._quizListService.getQuizessBySearchTag(_this.searchTag)
-                    .subscribe(function (quizess) {
-                    _this.quizlist = quizess;
-                }, function (error) { return console.error(error); });
-            }
+            _this.quizId = params["quizId"];
+            _this._quizListService.getQuizById(_this.quizId)
+                .subscribe(function (quizFound) {
+                _this._quiz = quizFound;
+            }, function (error) { return console.error(error); });
         });
     };
-    QuizListComponent.prototype.ngOnDestroy = function () {
-        this.sub.unsubscribe();
-    };
-    QuizListComponent = __decorate([
+    QuizCoverComponent = __decorate([
         core_1.Component({
-            selector: 'quizList',
-            templateUrl: 'quizList.component.html',
+            selector: 'quizCover',
+            templateUrl: 'quizCover.component.html',
             moduleId: module.id,
             providers: [quizList_service_1.QuizListService]
         }), 
         __metadata('design:paramtypes', [quizList_service_1.QuizListService, router_1.ActivatedRoute, router_1.Router])
-    ], QuizListComponent);
-    return QuizListComponent;
+    ], QuizCoverComponent);
+    return QuizCoverComponent;
 }());
-exports.QuizListComponent = QuizListComponent;
-//# sourceMappingURL=quizList.component.js.map
+exports.QuizCoverComponent = QuizCoverComponent;
+//# sourceMappingURL=quizCover.component.js.map

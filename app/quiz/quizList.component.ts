@@ -4,16 +4,8 @@ import {quiz,resultCategory,question} from "../model/quiz";
 import {QuizListService} from './quizList.service';
 @Component({
     selector: 'quizList',
-    
-    template:`
-     <ul>
-         <li  *ngFor = "let quiz of quizlist">
-         {{quiz.quizName}}
-         </li>
-     </ul>
-     {{searchTag}}
-     
-    `,
+    templateUrl:'quizList.component.html',
+    moduleId: module.id,
     providers:[QuizListService]
 })
 export class QuizListComponent implements OnInit{
@@ -33,7 +25,7 @@ export class QuizListComponent implements OnInit{
                 this.category = params["category"]  ;
                 this.subCategory = params["subcategory"];
                 this.searchTag = params["search"];
-                if (this.searchTag == ''){
+                if (!this.searchTag || this.searchTag == ''){
                     this._quizListService.getQuizessByCategory(this.category,this.subCategory)
                      .subscribe(
                     quizess => {

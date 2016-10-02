@@ -80,6 +80,8 @@ module.exports.getQuizOne = function(req,res){
 };
 
 
+
+
 module.exports.getAllQuizzes = function(req,res){
     var category = '';
     var subCategory = '';

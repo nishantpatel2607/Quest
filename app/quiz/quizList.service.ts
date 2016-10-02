@@ -23,6 +23,7 @@ export class QuizListService{
             let objs: any[]=[];
             for (let i=0; i< data.length; i++){
                 let _quiz = new quiz();
+                _quiz.Id = data[i]._id;
                 _quiz.quizName = data[i].quizName;
                 _quiz.categoryName = data[i].categoryName;
                 _quiz.subCategoryName = data[i].subCategoryName;
@@ -57,6 +58,7 @@ export class QuizListService{
             let objs: any[]=[];
             for (let i=0; i< data.length; i++){
                 let _quiz = new quiz();
+                _quiz.Id = data[i]._id;
                 _quiz.quizName = data[i].quizName;
                 _quiz.categoryName = data[i].categoryName;
                 _quiz.subCategoryName = data[i].subCategoryName;
@@ -80,4 +82,39 @@ export class QuizListService{
         .catch(error => Observable.throw(error));
     }
 
+    getQuizById(quizId:string){
+        var _url = this.url;
+        _url += "quiz/" + quizId;
+       
+         return this._http.get(_url)
+        .map(response =>{
+            const data = response.json().obj;
+            
+           
+            
+                let _quiz = new quiz();
+                _quiz.Id = data._id;
+                _quiz.quizName = data.quizName;
+                _quiz.categoryName = data.categoryName;
+                _quiz.subCategoryName = data.subCategoryName;
+                _quiz.introductionText = data.introductionText;
+                _quiz.passingMarks = data.passingMarks;
+                _quiz.durationinMins = data.durationinMins;
+                _quiz.privateQuiz = data.privateQuiz;
+                
+               
+                for (let j=0; j<data.resultCategories.length;j++){
+                    let resultCatg = new resultCategory();
+                    resultCatg.category = data.resultCategories[j].category;
+                    resultCatg.marks = data.resultCategories[j].marks;
+                    _quiz.resultCategories.push(resultCatg);
+                    
+                }
+               
+            
+            return _quiz;
+        })
+        .catch(error => Observable.throw(error));
+
+    }   
 }

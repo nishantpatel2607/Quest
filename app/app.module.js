@@ -19,6 +19,7 @@ var common_1 = require('@angular/common');
 var app_component_1 = require('./app.component');
 var navbar_component_1 = require('./navbar.component');
 var quizList_component_1 = require('./quiz/quizList.component');
+var quizCover_component_1 = require('./quiz/quizCover.component');
 var home_component_1 = require('./home.component');
 var app_routing_1 = require('./app.routing');
 var AppModule = (function () {
@@ -36,6 +37,7 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 navbar_component_1.NavBarComponent,
                 quizList_component_1.QuizListComponent,
+                quizCover_component_1.QuizCoverComponent,
                 home_component_1.HomeComponent
             ],
             providers: [{ provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }],

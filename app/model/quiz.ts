@@ -1,4 +1,5 @@
 export class quiz{
+    public Id:any;
     public quizName: string;
     public categoryName:string;
     public subCategoryName:string;

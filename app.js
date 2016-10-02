@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use('/quiz',quizRoutes);
 app.use('/quizcategories',quizCategoriesRoutes);
 //app.use('/api',routes);
-
+console.log('here');
 var Server =  app.listen(app.get('port'),function() {
 	var port = Server.address().port;
 console.log('Quest listens on port ' + port);	

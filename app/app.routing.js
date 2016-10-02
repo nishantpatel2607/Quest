@@ -1,11 +1,16 @@
 "use strict";
 var router_1 = require('@angular/router');
 var quizList_component_1 = require('./quiz/quizList.component');
+var quizCover_component_1 = require('./quiz/quizCover.component');
 var home_component_1 = require('./home.component');
 var appRoutes = [
     {
         path: 'quizlist',
         component: quizList_component_1.QuizListComponent
+    },
+    {
+        path: 'quizcover',
+        component: quizCover_component_1.QuizCoverComponent
     },
     {
         path: '',

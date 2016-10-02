@@ -1,0 +1,6 @@
+<div class="list-group">
+  <a [routerLink] = "['/quizcover',{quizId:quiz.Id}]" class="list-group-item" *ngFor = "let quiz of quizlist">
+    <h4 class="list-group-item-heading">{{quiz.quizName}}</h4>
+    <p class="list-group-item-text">{{quiz.introductionText}}</p>
+  </a>
+</div>
