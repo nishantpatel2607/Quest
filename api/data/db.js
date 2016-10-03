@@ -19,3 +19,4 @@ mongoose.connection.on('error',function(err){
 
 require('./quiz.model.js');
 require('./quizCategory.model.js');
+require('./user.model.js');

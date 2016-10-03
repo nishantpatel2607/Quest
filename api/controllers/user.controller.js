@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var globals = require('./globals.js');
+var passwordHash = require('password-hash');
 
 //Returns boolean value: Checks if user email is present or not
 module.exports.findByEmail = function(req,res){
@@ -35,7 +36,7 @@ module.exports.signUp = function(req,res){
             fullName:req.body.fullName,
             email:req.body.email,
             userName:req.body.userName,
-            password:req.body.password,
+            password: passwordHash.generate(req.body.password),
             companyName:req.body.companyName,
             userCategory:parseInt( req.body.userCategory,10)
         }, function (err,user){

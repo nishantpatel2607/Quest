@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var quizCategoriesRoutes = require('./api/routes/quizCategories');
 var quizRoutes = require('./api/routes/quiz');
+var userRoutes = require('./api/routes/user');
 
 app.set('port',3000);
 
@@ -24,15 +25,16 @@ app.use('/stylesheets', express.static(__dirname + '/app/assets/stylesheets'));
 app.use('/js', express.static(__dirname + '/app/assets/js'));
 app.use('/jquery', express.static(__dirname + '/app/assets/jquery'));
 app.use('/', express.static(__dirname ));
-
+ 
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 app.use('/quiz',quizRoutes);
 app.use('/quizcategories',quizCategoriesRoutes);
+app.use('/user',userRoutes);
 //app.use('/api',routes);
-console.log('here');
+
 var Server =  app.listen(app.get('port'),function() {
 	var port = Server.address().port;
 console.log('Quest listens on port ' + port);	

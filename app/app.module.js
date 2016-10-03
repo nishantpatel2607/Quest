@@ -20,6 +20,7 @@ var app_component_1 = require('./app.component');
 var navbar_component_1 = require('./navbar.component');
 var quizList_component_1 = require('./quiz/quizList.component');
 var quizCover_component_1 = require('./quiz/quizCover.component');
+var signup_component_1 = require('./auth/signup.component');
 var home_component_1 = require('./home.component');
 var app_routing_1 = require('./app.routing');
 var AppModule = (function () {
@@ -38,7 +39,8 @@ var AppModule = (function () {
                 navbar_component_1.NavBarComponent,
                 quizList_component_1.QuizListComponent,
                 quizCover_component_1.QuizCoverComponent,
-                home_component_1.HomeComponent
+                home_component_1.HomeComponent,
+                signup_component_1.SignUpComponent
             ],
             providers: [{ provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }],
             bootstrap: [app_component_1.AppComponent]

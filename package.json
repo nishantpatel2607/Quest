@@ -12,7 +12,6 @@
     "tsc:w": "tsc -w",
     "typings": "typings"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nishantpatel2607/Quest.git"
@@ -27,10 +26,6 @@
   },
   "homepage": "https://github.com/nishantpatel2607/Quest#readme",
   "dependencies": {
-    "body-parser": "^1.15.1",
-    "express": "^4.13.4",
-    "mongodb": "^2.1.21",
-    "mongoose": "^4.4.19",
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
     "@angular/core": "2.0.0",
@@ -40,19 +35,24 @@
     "@angular/platform-browser-dynamic": "2.0.0",
     "@angular/router": "3.0.0",
     "@angular/upgrade": "2.0.0",
+    "angular2-in-memory-web-api": "0.0.20",
+    "body-parser": "^1.15.1",
+    "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "express": "^4.13.4",
+    "mongodb": "^2.1.21",
+    "mongoose": "^4.4.19",
+    "password-hash": "^1.2.2",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.11",
     "systemjs": "0.19.27",
-    "zone.js": "^0.6.23",
-    "angular2-in-memory-web-api": "0.0.20",
-    "bootstrap": "^3.3.7"
+    "zone.js": "^0.6.23"
   },
   "devDependencies": {
     "mocha": "^2.4.5",
     "concurrently": "^2.2.0",
     "lite-server": "^2.2.2",
     "typescript": "^2.0.2",
-    "typings":"^1.3.2"
+    "typings": "^1.3.2"
   }
 }

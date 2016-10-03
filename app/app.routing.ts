@@ -4,6 +4,7 @@ import { ModuleWithProviders }  from '@angular/core';
 import {QuizListComponent} from './quiz/quizList.component';
 import {QuizCoverComponent}      from './quiz/quizCover.component';
 import {AppComponent} from './app.component';
+import {SignUpComponent}      from './auth/signup.component';
 import { HomeComponent }         from './home.component';
 
 const appRoutes: Routes = [
@@ -18,6 +19,11 @@ const appRoutes: Routes = [
     {
         path:'quizcover',
         component:QuizCoverComponent
+        
+    },
+    {
+        path:'signup',
+        component:SignUpComponent
         
     },
 
