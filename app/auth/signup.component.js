@@ -13,6 +13,8 @@ var router_1 = require('@angular/router');
 var user_1 = require("../model/user");
 var auth_service_1 = require('./auth.service');
 var forms_1 = require('@angular/forms');
+var emailvalidator_1 = require('./emailvalidator');
+var matchpasswordvalidator_1 = require('./matchpasswordvalidator');
 var SignUpComponent = (function () {
     function SignUpComponent(_fb, _authService, route, router) {
         this._fb = _fb;
@@ -21,15 +23,16 @@ var SignUpComponent = (function () {
         this.router = router;
         this.user = new user_1.user();
         this.signupForm = _fb.group({
-            'fullName': '',
-            'email': '',
-            'password': '',
-            'confirmPassword': ''
-        });
+            'fullName': [null, forms_1.Validators.required],
+            'email': ['', forms_1.Validators.compose([forms_1.Validators.required, emailvalidator_1.EmailValidator.EmailIsValid])],
+            'password': [null, forms_1.Validators.required],
+            'confirmPassword': [null, forms_1.Validators.required]
+        }, { validator: matchpasswordvalidator_1.matchingPasswords('password', 'confirmPassword') });
     }
     SignUpComponent.prototype.ngOnInit = function () {
     };
     SignUpComponent.prototype.signUp = function (value) {
+        console.log(value);
     };
     SignUpComponent = __decorate([
         core_1.Component({

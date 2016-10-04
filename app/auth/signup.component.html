@@ -1,45 +1,76 @@
 
 <div class="col-md-4 col-md-offset-4 well">
-<form  [formGroup]="signupForm" (ngSubmit)="save(f.form)">
+<form  [formGroup]="signupForm" (ngSubmit)="signUp(signupForm.value)" >
     <fieldset>
         <legend>Sign Up</legend>
-        <div class="form-group">
+        <div class="form-group" 
+        [ngClass]="{'has-error':!signupForm.controls['fullName'].valid 
+        && signupForm.controls['fullName'].touched}">
             <label for="inputFullname" >Full Name</label>
             <input
                 type="text"
                 id="inputFullName"
                 [formControl]="signupForm.controls['fullName']"
-                 [(ngModel)] = "user.fullName">
+                 [(ngModel)] = "user.fullName" 
+                 class="form-control">
+            <div *ngIf="signupForm.controls['fullName'].hasError('required') 
+                && signupForm.controls['fullName'].touched" class="alert alert-danger">
+                You must include your full name.
+            </div>
+      
         </div>
-        <div class="form-group">
+        <div class="form-group" 
+        [ngClass]="{'has-error':!signupForm.controls['email'].valid 
+        && signupForm.controls['email'].touched}">
             <label for="inputEmail">Email</label>
             <input
-                required
                 type="email"
                 id="inputEmail"
                 [formControl]="signupForm.controls['email']"
-                [(ngModel)] = "user.email">
+                [(ngModel)] = "user.email"
+                class="form-control">
+
+            <div *ngIf="(signupForm.controls['email'].hasError('required') || 
+            signupForm.controls['email'].hasError('EmailIsValid'))
+            && signupForm.controls['email'].touched" class="alert alert-danger">
+                Invalid email address.
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" 
+        [ngClass]="{'has-error':!signupForm.controls['password'].valid 
+        && signupForm.controls['password'].touched}">
             <label for="inputPassword">Password</label>
             <input
-                 required
+                 
                 type="password"
                 id="inputPassword"
                 [formControl]="signupForm.controls['password']"
-                [(ngModel)] = "user.password">
+                [(ngModel)] = "user.password"
+                class="form-control"                
+                >
+
+            <div *ngIf="signupForm.controls['password'].hasError('required') 
+                && signupForm.controls['password'].touched" class="alert alert-danger">
+                You must specify password.
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" 
+        [ngClass]="{'has-error':!signupForm.controls['confirmPassword'].valid 
+        && signupForm.controls['confirmPassword'].touched}">
             <label for="inputConfirmPassword">Confirm Password</label>
             <input
-                 required
                 type="password"
                 id="inputConfirmPassword"
                 [formControl]="signupForm.controls['confirmPassword']"
-                >
+                class="form-control">
+            <div *ngIf="signupForm.hasError('mismatchedPasswords') 
+                && signupForm.controls['confirmPassword'].touched" class="alert alert-danger">
+                Passwords do not match.
+            </div>
+                
         </div>
         <div class="form-group">
-        <button type="submit" class="btn btn-primary col-lg-12">Sign Up</button>
+        <button type="submit" class="btn btn-primary col-lg-12" [disabled]="!signupForm.valid">Sign Up</button>
         </div>
     </fieldset>
 </form>

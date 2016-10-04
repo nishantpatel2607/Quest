@@ -2,7 +2,9 @@ import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute, Params,Router } from '@angular/router';
 import {user} from "../model/user";
 import {AuthService} from './auth.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'; 
+import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms'; 
+import {EmailValidator} from './emailvalidator';
+import {matchingPasswords} from './matchpasswordvalidator';
 
 @Component({
     selector:'signUp',
@@ -21,17 +23,17 @@ export class SignUpComponent implements OnInit{
        private router: Router) {
 
            this.signupForm = _fb.group({
-               'fullName' : '',
-               'email':'',
-               'password':'',
-               'confirmPassword':''
-           })
+               'fullName' : [null, Validators.required],
+               'email':['',Validators.compose([Validators.required,EmailValidator.EmailIsValid])],
+               'password':[null, Validators.required],
+               'confirmPassword':[null, Validators.required]
+           }, {validator: matchingPasswords('password', 'confirmPassword')})
     }
 
     ngOnInit(): void {
     }
 
     signUp(value:any):void{
-
+        console.log(value);
     }
 }
