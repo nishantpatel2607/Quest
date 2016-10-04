@@ -10,14 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var user_1 = require("../model/user");
 var auth_service_1 = require('./auth.service');
+var forms_1 = require('@angular/forms');
 var SignUpComponent = (function () {
-    function SignUpComponent(_authService, route, router) {
+    function SignUpComponent(_fb, _authService, route, router) {
+        this._fb = _fb;
         this._authService = _authService;
         this.route = route;
         this.router = router;
+        this.user = new user_1.user();
+        this.signupForm = _fb.group({
+            'fullName': '',
+            'email': '',
+            'password': '',
+            'confirmPassword': ''
+        });
     }
     SignUpComponent.prototype.ngOnInit = function () {
+    };
+    SignUpComponent.prototype.signUp = function (value) {
     };
     SignUpComponent = __decorate([
         core_1.Component({
@@ -26,7 +38,7 @@ var SignUpComponent = (function () {
             moduleId: module.id,
             providers: [auth_service_1.AuthService]
         }), 
-        __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.ActivatedRoute, router_1.Router])
+        __metadata('design:paramtypes', [forms_1.FormBuilder, auth_service_1.AuthService, router_1.ActivatedRoute, router_1.Router])
     ], SignUpComponent);
     return SignUpComponent;
 }());

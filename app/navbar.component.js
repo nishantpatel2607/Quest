@@ -28,16 +28,6 @@ var NavBarComponent = (function () {
         this.router.navigate(['/quizlist', { search: this.searchText }]);
         console.log(this.searchText);
     };
-    NavBarComponent.prototype.onCategoryClicked = function (category) {
-        var params = category.split(',');
-        var catg = params[0];
-        var subCatg = '';
-        if (params.length > 1)
-            subCatg = params[1];
-        var link = ['/quizlist/:category/:subcategory', { category: catg, subcategory: subCatg }];
-        console.log(link);
-        this.router.navigate(link);
-    };
     NavBarComponent = __decorate([
         core_1.Component({
             selector: 'navbar',

@@ -39,18 +39,7 @@ export class NavBarComponent implements OnInit{
         console.log(this.searchText);
     }
 
-    onCategoryClicked(category:string){
-        var params = category.split(',');
-        var catg = params[0];
-        var subCatg = '';
-        if (params.length>1)
-            subCatg = params[1];
-        let link = ['/quizlist/:category/:subcategory', {category: catg, subcategory:subCatg}];
-        console.log(link);
-        this.router.navigate(link);
-        
-        
-    }
+    
 
 
 }

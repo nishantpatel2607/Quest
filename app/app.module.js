@@ -30,6 +30,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [
                 platform_browser_1.BrowserModule,
+                forms_1.ReactiveFormsModule,
                 forms_1.FormsModule,
                 http_1.HttpModule,
                 app_routing_1.routing
