@@ -7,4 +7,10 @@ var user = (function () {
     return user;
 }());
 exports.user = user;
+var signUpuser = (function () {
+    function signUpuser() {
+    }
+    return signUpuser;
+}());
+exports.signUpuser = signUpuser;
 //# sourceMappingURL=user.js.map

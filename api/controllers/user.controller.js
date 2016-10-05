@@ -15,7 +15,7 @@ module.exports.findByEmail = function(req,res){
             .status(500)
             .json(err);
         }
-        else if (!user)
+        else if (!user || user.length ==0)
         {
             res
             .status(404)
@@ -29,8 +29,47 @@ module.exports.findByEmail = function(req,res){
     });
 };
 
+module.exports.verifyEmail = function(req,res){
+    var email = '';
+    if (req.query)
+    {
+        if (req.query.email)
+            email = req.query.email;
+    }
+    
+    User
+    .find({"email":email})
+    .exec(function(err,user){
+    if (err)
+        {
+            res
+            .status(500)
+            .json(err);
+        }
+        else if (!user)
+        {
+            res
+            .status(404)
+            .json("false");
+        }
+        else if (user.length == 0 )
+        {
+            res
+            .status(404)
+            .json("false");
+        }
+        else
+        {
+            res
+                .status(200)
+                .json("true");
+        }
+    });
+};
+
 module.exports.signUp = function(req,res){
     if (req.body.userCategory == '') req.body.userCategory = '0';
+    //console.log(req.body);
     User
         .create({
             fullName:req.body.fullName,

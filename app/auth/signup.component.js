@@ -21,7 +21,7 @@ var SignUpComponent = (function () {
         this._authService = _authService;
         this.route = route;
         this.router = router;
-        this.user = new user_1.user();
+        this.user = new user_1.signUpuser();
         this.signupForm = _fb.group({
             'fullName': [null, forms_1.Validators.required],
             'email': ['', forms_1.Validators.compose([forms_1.Validators.required, emailvalidator_1.EmailValidator.EmailIsValid])],
@@ -30,9 +30,14 @@ var SignUpComponent = (function () {
         }, { validator: matchpasswordvalidator_1.matchingPasswords('password', 'confirmPassword') });
     }
     SignUpComponent.prototype.ngOnInit = function () {
+        //this.signupForm.controls["email"].setAsyncValidators(this.isEmailExist);
     };
     SignUpComponent.prototype.signUp = function (value) {
-        console.log(value);
+        /*this.user = new user();
+        this.user.fullName = value.fullName;
+        this.user.email = value.email;
+        this.user.password = value.password;*/
+        this._authService.createUser(this.user).subscribe(function (res) { console.log(res); });
     };
     SignUpComponent = __decorate([
         core_1.Component({

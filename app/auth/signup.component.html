@@ -30,10 +30,16 @@
                 [(ngModel)] = "user.email"
                 class="form-control">
 
-            <div *ngIf="(signupForm.controls['email'].hasError('required') || 
-            signupForm.controls['email'].hasError('EmailIsValid'))
-            && signupForm.controls['email'].touched" class="alert alert-danger">
-                Invalid email address.
+            <div *ngIf ="signupForm.controls['email'].touched">
+                <div *ngIf="(signupForm.controls['email'].hasError('required') || 
+                signupForm.controls['email'].hasError('EmailIsValid'))"
+                class="alert alert-danger">
+                    Invalid email address.
+                </div>
+                <div *ngIf="(signupForm.controls['email'].hasError('emailExists'))"
+                class="alert alert-danger">
+                    This email address is already registered.
+                </div>
             </div>
         </div>
         <div class="form-group" 

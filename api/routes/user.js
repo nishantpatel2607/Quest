@@ -8,6 +8,10 @@ router
 .post(ctrlUser.signUp);
 
 router
+.route('/verifyemail')
+.get(ctrlUser.verifyEmail );
+
+router
 .route('/:email')
 .get(ctrlUser.findByEmail);
 
