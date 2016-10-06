@@ -18,6 +18,7 @@ import {NavBarComponent}        from './navbar.component';
 import {QuizListComponent}      from './quiz/quizList.component';
 import {QuizCoverComponent}     from './quiz/quizCover.component';
 import {SignUpComponent}        from './auth/signup.component';
+import {SignInComponent}        from './auth/signin.component';
 import { HomeComponent }        from './home.component';
 
 import { routing }              from './app.routing';
@@ -36,7 +37,8 @@ import { routing }              from './app.routing';
     QuizListComponent,
     QuizCoverComponent,
     HomeComponent,
-    SignUpComponent
+    SignUpComponent,
+    SignInComponent
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   

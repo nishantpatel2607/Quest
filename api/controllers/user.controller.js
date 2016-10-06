@@ -70,27 +70,53 @@ module.exports.verifyEmail = function(req,res){
 module.exports.signUp = function(req,res){
     if (req.body.userCategory == '') req.body.userCategory = '0';
     //console.log(req.body);
+    var email = '';
+    var emailFound = false;
+    email = req.body.email;
+    console.log(email);
     User
-        .create({
-            fullName:req.body.fullName,
-            email:req.body.email,
-            userName:req.body.userName,
-            password: passwordHash.generate(req.body.password),
-            companyName:req.body.companyName,
-            userCategory:parseInt( req.body.userCategory,10)
-        }, function (err,user){
-            if (err)
-            {
-                res
-                    .status(500)
-                    .json(err);
-            }
-            else{
-                res
-                    .status(201)
-                    .json("User created.");
-            }
-        });
+    .find({"email":email})
+    .exec(function(err,user){
+    if (err)
+        {
+             console.log(err);
+            emailFound = false;
+        }
+    else if (!user || user.length == 0)
+        {
+            console.log("not found");
+            User
+            .create({
+                fullName:req.body.fullName,
+                email:req.body.email,
+                userName:req.body.userName,
+                password: passwordHash.generate(req.body.password),
+                companyName:req.body.companyName,
+                userCategory:parseInt( req.body.userCategory,10)
+            }, function (err,user){
+                if (err)
+                {
+                    res
+                        .status(500)
+                        .json(err);
+                }
+                else{
+                    res
+                        .status(201)
+                        .json("User created.");
+                }
+            });
+  
+        }
+    else
+        {
+            console.log("found");
+             res
+            .status(500)
+            .json({error:"Email already exists"});
+        }
+    });
+    
 }
 
 module.exports.updateUser = function(req,res){

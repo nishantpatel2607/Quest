@@ -36,7 +36,8 @@
                 class="alert alert-danger">
                     Invalid email address.
                 </div>
-                <div *ngIf="(signupForm.controls['email'].hasError('emailExists'))"
+                <!--<div *ngIf="(signupForm.controls['email'].hasError('emailExists'))"-->
+                <div *ngIf="(emailExists)"
                 class="alert alert-danger">
                     This email address is already registered.
                 </div>

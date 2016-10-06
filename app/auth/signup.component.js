@@ -21,23 +21,35 @@ var SignUpComponent = (function () {
         this._authService = _authService;
         this.route = route;
         this.router = router;
-        this.user = new user_1.signUpuser();
-        this.signupForm = _fb.group({
+        this.emailExists = false;
+        this.user = new user_1.user();
+    }
+    SignUpComponent.prototype.ngOnInit = function () {
+        this.signupForm = this._fb.group({
             'fullName': [null, forms_1.Validators.required],
             'email': ['', forms_1.Validators.compose([forms_1.Validators.required, emailvalidator_1.EmailValidator.EmailIsValid])],
             'password': [null, forms_1.Validators.required],
             'confirmPassword': [null, forms_1.Validators.required]
         }, { validator: matchpasswordvalidator_1.matchingPasswords('password', 'confirmPassword') });
-    }
-    SignUpComponent.prototype.ngOnInit = function () {
         //this.signupForm.controls["email"].setAsyncValidators(this.isEmailExist);
     };
     SignUpComponent.prototype.signUp = function (value) {
-        /*this.user = new user();
-        this.user.fullName = value.fullName;
-        this.user.email = value.email;
-        this.user.password = value.password;*/
-        this._authService.createUser(this.user).subscribe(function (res) { console.log(res); });
+        var _this = this;
+        this.emailExists = false;
+        this._authService.createUser(this.user).subscribe(function (res) { return console.log(res); }, function (error) {
+            console.error(error);
+            _this.emailExists = true;
+        });
+    };
+    SignUpComponent.prototype.isEmailExist = function (control) {
+        var emailFlag = '';
+        this._authService.isEmailExists(control.value)
+            .debounceTime(400)
+            .subscribe(function (ans) {
+            emailFlag = ans;
+        });
+        if (emailFlag == "true")
+            return { emailExists: true };
     };
     SignUpComponent = __decorate([
         core_1.Component({

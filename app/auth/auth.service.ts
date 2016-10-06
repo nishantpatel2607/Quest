@@ -2,14 +2,14 @@ import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from "rxjs/Observable";
-import {user,signUpuser} from "../model/user";
+import {user} from "../model/user";
 
 @Injectable()
 export class AuthService{
     private url = "http://localhost:3000/user/";
     constructor (private _http: Http) {}
 
-    createUser(_user:signUpuser){
+    createUser(_user:user){
         const body = JSON.stringify(_user);
         const headers = new Headers({'Content-Type': 'application/json'});
 

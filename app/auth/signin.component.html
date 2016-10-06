@@ -1,0 +1,43 @@
+<section class="col-md-8 col-md-offset-2">
+    <form  [formGroup]="signinForm" (ngSubmit)="signIn()" >
+        <div class="form-group" 
+        [ngClass]="{'has-error':!signinForm.controls['email'].valid 
+        && signinForm.controls['email'].touched}">
+            <label for="inputEmail">Email</label>
+            <input
+                type="email"
+                id="inputEmail"
+                [formControl]="signinForm.controls['email']"
+                class="form-control">
+
+            <div *ngIf ="signinForm.controls['email'].touched">
+                <div *ngIf="(signinForm.controls['email'].hasError('required') || 
+                signinForm.controls['email'].hasError('EmailIsValid'))"
+                class="alert alert-danger">
+                    Invalid email address.
+                </div>
+            </div>
+        </div>
+
+         <div class="form-group" 
+        [ngClass]="{'has-error':!signinForm.controls['password'].valid 
+        && signinForm.controls['password'].touched}">
+            <label for="inputPassword">Password</label>
+            <input
+                 
+                type="password"
+                id="inputPassword"
+                [formControl]="signinForm.controls['password']"
+                class="form-control"                
+                >
+
+            <div *ngIf="signinForm.controls['password'].hasError('required') 
+                && signinForm.controls['password'].touched" class="alert alert-danger">
+                Enter password.
+            </div>
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary col-lg-12" [disabled]="!signupForm.valid">Sign Up</button>
+        </div>
+    </form>
+</section>
