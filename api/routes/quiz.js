@@ -22,6 +22,10 @@ router
 .post(ctrlQuestion.addQuestion);
 
 router
+.route('/:quizId/quizquestion')
+.get(ctrlQuestion.getQuestionsWithoutAnswer);
+
+router
 .route('/:quizId/questions/:questionId')
 .put(ctrlQuestion.updateQuestion)
 .delete(ctrlQuestion.deleteQuestion);

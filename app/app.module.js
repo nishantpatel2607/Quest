@@ -20,6 +20,7 @@ var app_component_1 = require('./app.component');
 var navbar_component_1 = require('./navbar.component');
 var quizList_component_1 = require('./quiz/quizList.component');
 var quizCover_component_1 = require('./quiz/quizCover.component');
+var quizRun_component_1 = require('./quiz/quizRun.component');
 var signup_component_1 = require('./auth/signup.component');
 var signin_component_1 = require('./auth/signin.component');
 var home_component_1 = require('./home.component');
@@ -41,6 +42,7 @@ var AppModule = (function () {
                 navbar_component_1.NavBarComponent,
                 quizList_component_1.QuizListComponent,
                 quizCover_component_1.QuizCoverComponent,
+                quizRun_component_1.QuizRunComponent,
                 home_component_1.HomeComponent,
                 signup_component_1.SignUpComponent,
                 signin_component_1.SignInComponent

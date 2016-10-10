@@ -1,0 +1,30 @@
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{currentQuestion.questionText}}</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+          
+                <div class="radio" *ngFor="let option of currentQuestion.options">
+                    <label >
+                        <input type="radio" name="selOption" 
+                        (click)="saveValue(option)"
+                            value=option
+                            [checked]="option == currentAnswer">{{option}}
+                    </label>
+                </div>
+
+            </form>
+            <button  class="btn btn-primary" (click) = "previous()" >Previous</button>
+             <span [hidden]="totalQuestions==questionNo">
+                 <button  class="btn btn-primary pull-right" (click) = "next()" >Next</button>
+             </span>
+           <span [hidden]="totalQuestions!=questionNo"> 
+               <button  class="btn btn-primary pull-right"  (click) = "next()" >Submit</button>
+           </span>
+      </div>
+  
+  </div>
+
+

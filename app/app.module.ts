@@ -17,6 +17,7 @@ import { AppComponent }         from './app.component';
 import {NavBarComponent}        from './navbar.component';
 import {QuizListComponent}      from './quiz/quizList.component';
 import {QuizCoverComponent}     from './quiz/quizCover.component';
+import {QuizRunComponent}      from './quiz/quizRun.component';
 import {SignUpComponent}        from './auth/signup.component';
 import {SignInComponent}        from './auth/signin.component';
 import { HomeComponent }        from './home.component';
@@ -36,6 +37,7 @@ import { routing }              from './app.routing';
     NavBarComponent,
     QuizListComponent,
     QuizCoverComponent,
+    QuizRunComponent,
     HomeComponent,
     SignUpComponent,
     SignInComponent

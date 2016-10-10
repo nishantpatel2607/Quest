@@ -89,9 +89,7 @@ export class QuizListService{
          return this._http.get(_url)
         .map(response =>{
             const data = response.json().obj;
-            
-           
-            
+ 
                 let _quiz = new quiz();
                 _quiz.Id = data._id;
                 _quiz.quizName = data.quizName;

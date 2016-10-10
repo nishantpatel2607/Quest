@@ -31,4 +31,12 @@ export class QuizCoverComponent implements OnInit{
         });
         
     }
+
+    startQuiz(){
+        this.router.navigate(['/quizrun', {quizId:this.quizId}]);
+    }
+
+    ngOnDestroy():void{
+        this.sub = null;
+    }
 }

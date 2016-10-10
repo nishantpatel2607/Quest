@@ -1,1 +1,21 @@
-<h4>{{_quiz.quizName}}</h4>
+<div class="col-md-5 col-sm-offset-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{_quiz.quizName}}</h3>
+      </div>
+      <div class="panel-body">
+          <p>
+            {{_quiz.introductionText}}
+          </p>
+        <br/>
+        <p>
+            Duration: {{_quiz.durationinMins}} Mins.
+        </p>
+        <p>
+            <button type="submit" class="btn btn-primary" (click) = "startQuiz()" >Start Quiz</button>
+        </p>
+      </div>
+  
+  </div>
+</div>
+

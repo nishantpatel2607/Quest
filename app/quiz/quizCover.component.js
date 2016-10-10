@@ -29,6 +29,12 @@ var QuizCoverComponent = (function () {
             }, function (error) { return console.error(error); });
         });
     };
+    QuizCoverComponent.prototype.startQuiz = function () {
+        this.router.navigate(['/quizrun', { quizId: this.quizId }]);
+    };
+    QuizCoverComponent.prototype.ngOnDestroy = function () {
+        this.sub = null;
+    };
     QuizCoverComponent = __decorate([
         core_1.Component({
             selector: 'quizCover',
