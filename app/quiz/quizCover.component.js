@@ -12,11 +12,13 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var quiz_1 = require("../model/quiz");
 var quizList_service_1 = require('./quizList.service');
+var global_service_1 = require('../global.service');
 var QuizCoverComponent = (function () {
-    function QuizCoverComponent(_quizListService, route, router) {
+    function QuizCoverComponent(_quizListService, route, router, globals) {
         this._quizListService = _quizListService;
         this.route = route;
         this.router = router;
+        this.globals = globals;
         this._quiz = new quiz_1.quiz();
     }
     QuizCoverComponent.prototype.ngOnInit = function () {
@@ -30,6 +32,7 @@ var QuizCoverComponent = (function () {
         });
     };
     QuizCoverComponent.prototype.startQuiz = function () {
+        this.globals.enableNavBar(false);
         this.router.navigate(['/quizrun', { quizId: this.quizId }]);
     };
     QuizCoverComponent.prototype.ngOnDestroy = function () {
@@ -42,7 +45,7 @@ var QuizCoverComponent = (function () {
             moduleId: module.id,
             providers: [quizList_service_1.QuizListService]
         }), 
-        __metadata('design:paramtypes', [quizList_service_1.QuizListService, router_1.ActivatedRoute, router_1.Router])
+        __metadata('design:paramtypes', [quizList_service_1.QuizListService, router_1.ActivatedRoute, router_1.Router, global_service_1.GlobalService])
     ], QuizCoverComponent);
     return QuizCoverComponent;
 }());

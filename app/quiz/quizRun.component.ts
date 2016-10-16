@@ -2,16 +2,14 @@ import { Component,OnInit } from '@angular/core';
 import { ActivatedRoute, Params,Router } from '@angular/router';
 import {quiz,resultCategory,question} from "../model/quiz";
 import {QuizListService} from './quizList.service';
+import {ElementRef,ViewChild} from '@angular/core';
 
 
 @Component({
     selector: 'quizRun',
-    templateUrl:'quizRun.component.html',
+    templateUrl:`quizRun.component.html`,
     moduleId: module.id,
     providers:[QuizListService],
-    
-    
-   
 })
 
 export class QuizRunComponent implements OnInit{
@@ -20,8 +18,10 @@ export class QuizRunComponent implements OnInit{
     questionNo = 1;
     currentQuestion:any;
     totalQuestions:number;
-    Answers:string[] = [];
-    currentAnswer:string;
+    Answers:number[] = [];
+    currentAnswer:number;
+
+    @ViewChild('lstOptions') el:ElementRef;
     
     questions:any[]=[
         {"questionText": "Question 1 Text here",
@@ -88,7 +88,7 @@ export class QuizRunComponent implements OnInit{
          this.currentQuestion = this.questions[this.questionNo-1];
         this.totalQuestions = this.questions.length;
         for(var i=0;i<this.totalQuestions;i++){
-            this.Answers.push("");
+            this.Answers.push(-1);
         }
      }
 
@@ -114,7 +114,9 @@ export class QuizRunComponent implements OnInit{
      saveValue(option) {
       //this.selectedOption = this.options.filter((item)=> item.id == optionid)[0];
       console.log("Option:" + option);
-      this.Answers[this.questionNo-1] = option;
-      //console.log(this.Answers);
-  }
+      this.Answers[this.questionNo-1] = parseInt( option,10);
+      console.log(this.Answers);
+      }
+
+     
 }

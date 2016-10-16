@@ -14,12 +14,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown" >
+        <li class="dropdown" [ngClass]="{'disabled' : !enableFlag}"  >
             <a href="#" class="dropdown-toggle" 
               data-toggle="dropdown" 
               role="button" 
               aria-haspopup="true" 
-              aria-expanded="false">Categories
+              aria-expanded="false"
+              >Categories
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
@@ -47,9 +48,9 @@
         </li>
       </ul>
       <form class="navbar-form navbar-left" (ngSubmit)="onSubmit()" #searchForm="ngForm">
-        <div class="form-group">
+        <div class="form-group" >
           <input id="search" required type="text" class="form-control" placeholder="Search"
-          [(ngModel)]="searchText" name="search">
+          [(ngModel)]="searchText" name="search" >
         </div>
         <button type="submit" class="btn btn-default" [disabled]="!searchForm.valid">Submit</button>
       </form>
@@ -61,3 +62,4 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+ 

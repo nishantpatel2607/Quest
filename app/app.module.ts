@@ -23,6 +23,8 @@ import {SignInComponent}        from './auth/signin.component';
 import { HomeComponent }        from './home.component';
 
 import { routing }              from './app.routing';
+import {GlobalService} from './global.service';
+
 
 @NgModule({
   imports: [
@@ -42,7 +44,7 @@ import { routing }              from './app.routing';
     SignUpComponent,
     SignInComponent
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},GlobalService],
   
   bootstrap: [ AppComponent]
 })

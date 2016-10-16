@@ -25,6 +25,7 @@ var signup_component_1 = require('./auth/signup.component');
 var signin_component_1 = require('./auth/signin.component');
 var home_component_1 = require('./home.component');
 var app_routing_1 = require('./app.routing');
+var global_service_1 = require('./global.service');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -47,7 +48,7 @@ var AppModule = (function () {
                 signup_component_1.SignUpComponent,
                 signin_component_1.SignInComponent
             ],
-            providers: [{ provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }],
+            providers: [{ provide: common_1.LocationStrategy, useClass: common_1.HashLocationStrategy }, global_service_1.GlobalService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var quizList_service_1 = require('./quizList.service');
+var core_2 = require('@angular/core');
 var QuizRunComponent = (function () {
     function QuizRunComponent(_quizListService, route, router) {
         this._quizListService = _quizListService;
@@ -73,7 +74,7 @@ var QuizRunComponent = (function () {
         this.currentQuestion = this.questions[this.questionNo - 1];
         this.totalQuestions = this.questions.length;
         for (var i = 0; i < this.totalQuestions; i++) {
-            this.Answers.push("");
+            this.Answers.push(-1);
         }
     };
     QuizRunComponent.prototype.previous = function () {
@@ -95,13 +96,17 @@ var QuizRunComponent = (function () {
     QuizRunComponent.prototype.saveValue = function (option) {
         //this.selectedOption = this.options.filter((item)=> item.id == optionid)[0];
         console.log("Option:" + option);
-        this.Answers[this.questionNo - 1] = option;
-        //console.log(this.Answers);
+        this.Answers[this.questionNo - 1] = parseInt(option, 10);
+        console.log(this.Answers);
     };
+    __decorate([
+        core_2.ViewChild('lstOptions'), 
+        __metadata('design:type', core_2.ElementRef)
+    ], QuizRunComponent.prototype, "el", void 0);
     QuizRunComponent = __decorate([
         core_1.Component({
             selector: 'quizRun',
-            templateUrl: 'quizRun.component.html',
+            templateUrl: "quizRun.component.html",
             moduleId: module.id,
             providers: [quizList_service_1.QuizListService],
         }), 
